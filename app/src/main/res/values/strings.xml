@@ -3,6 +3,7 @@
     <string name="app_logo">Logo del App</string>
     <string name="route_50">Ruta 50</string>
     <string name="route_b">Ruta B</string>
+    <string name="route_menu">Seleccionar Ruta</string>
     <string-array name="route_options">
         <item>@string/route_50</item>
         <item>@string/route_b</item>

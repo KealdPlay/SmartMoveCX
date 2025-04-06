@@ -7,12 +7,13 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FusedLocationProviderClient fusedLocationClient;
     private Handler locationUpdateHandler;
     private Runnable locationUpdateRunnable;
-    private Spinner routeSelector;
+    private ImageButton menuButton;
     private ImageView logoImageView;
 
     // Path A and Path B variables
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Polyline pathBPolyline;
     private List<Marker> pathAMarkers;
     private List<Marker> pathBMarkers;
-    private String currentRoute = "Ruta 50"; // Default route
+    private String currentRoute = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +83,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         txtLat = findViewById(R.id.txtLat);
         txtLng = findViewById(R.id.txtLng);
 
-        // Initialize route selector spinner
-        routeSelector = findViewById(R.id.route_selector);
+        // Initialize menu button and logo
+        menuButton = findViewById(R.id.menu_button);
         logoImageView = findViewById(R.id.logo_image);
-        setupRouteSelector();
+        setupMenuButton();
 
         // Initialize location client
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -112,28 +113,36 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    private void setupRouteSelector() {
-        // Create an ArrayAdapter using a simple spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.route_options, android.R.layout.simple_spinner_item);
-        // Apply the adapter to the spinner
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        routeSelector.setAdapter(adapter);
-
-        // Set up the listener for route selection
-        routeSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    private void setupMenuButton() {
+        menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedRoute = parent.getItemAtPosition(position).toString();
-                currentRoute = selectedRoute;
-                updateRouteVisibility(selectedRoute);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Nothing to do here
+            public void onClick(View v) {
+                showRouteMenu(v);
             }
         });
+    }
+
+    private void showRouteMenu(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.route_menu, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.route_50) {
+                    currentRoute = getString(R.string.route_50);
+                    updateRouteVisibility(currentRoute);
+                    return true;
+                } else if (item.getItemId() == R.id.route_b) {
+                    currentRoute = getString(R.string.route_b);
+                    updateRouteVisibility(currentRoute);
+                    return true;
+                }
+                return false;
+            }
+        });
+        popup.show();
     }
 
     private void updateRouteVisibility(String selectedRoute) {
@@ -251,6 +260,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Initialize with the default route
         updateRouteVisibility(currentRoute);
+
+        // Set map bounds to cover both routes
+        LatLng southwest = new LatLng(21.634775200235094, -102.86666648574204);
+        LatLng northeast = new LatLng(22.461368865192668, -101.82028662287628);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(new com.google.android.gms.maps.model.LatLngBounds(southwest, northeast), 0));
+
     }
 
     private void addRouteMarkers() {
