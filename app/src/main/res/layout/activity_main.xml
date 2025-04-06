@@ -37,18 +37,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/app_name"
+            android:text="ins_logo"
             android:textColor="#EDEDED"
             android:textSize="18sp"/>
 
-        <!-- Logo Space -->
-        <ImageView
+        <!-- Cambiar por el logo completo -->
+        <!--ImageView
             android:id="@+id/logo_image"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="end|center_vertical"
             android:contentDescription="@string/app_logo"
-            android:src="@drawable/ic_launcher_foreground"/>
+            android:src="@drawable/ic_launcher_foreground" -->
     </LinearLayout>
 
     <fragment

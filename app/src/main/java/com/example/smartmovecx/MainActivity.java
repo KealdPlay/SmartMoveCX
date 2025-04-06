@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Initialize menu button and logo
         menuButton = findViewById(R.id.menu_button);
-        logoImageView = findViewById(R.id.logo_image);
+      //  logoImageView = findViewById(R.id.logo_image);
         setupMenuButton();
 
         // Initialize location client
