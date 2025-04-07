@@ -21,34 +21,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Route Menu Icon -->
+        <!-- Icono del Menu de Rutas -->
         <ImageButton
             android:id="@+id/menu_button"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="start|center_vertical"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/route_menu"
             android:src="@drawable/ic_menu" />
 
-        <!-- Title space -->
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/centered_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="ins_logo"
-            android:textColor="#EDEDED"
-            android:textSize="18sp"/>
-
-        <!-- Cambiar por el logo completo -->
-        <!--ImageView
-            android:id="@+id/logo_image"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="end|center_vertical"
+            android:layout_gravity="center"
             android:contentDescription="@string/app_logo"
-            android:src="@drawable/ic_launcher_foreground" -->
+            android:src="@drawable/complete_logo" />
     </LinearLayout>
 
     <fragment

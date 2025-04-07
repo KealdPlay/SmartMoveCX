@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
+
     }
 
     private void setupMenuButton() {
